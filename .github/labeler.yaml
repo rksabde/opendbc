@@ -79,6 +79,10 @@ volkswagen:
   - changed-files:
     - any-glob-to-any-file: 'opendbc/car/volkswagen/**'
 
+volvo:
+  - changed-files:
+    - any-glob-to-any-file: 'opendbc/car/volvo/**'
+
 fingerprint:
   - changed-files:
     - any-glob-to-all-files: 'opendbc/car/*/fingerprints.py'

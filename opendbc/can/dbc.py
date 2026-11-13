@@ -18,6 +18,7 @@ from opendbc.car.tesla.teslacan import tesla_checksum
 from opendbc.car.body.bodycan import body_checksum
 from opendbc.car.byd.bydcan import byd_checksum
 from opendbc.car.psa.psacan import psa_checksum
+from opendbc.car.volvo.volvocan import volvo_checksum
 from opendbc.car.rivian.riviancan import rivian_checksum
 from opendbc.car.ford.fordcan import FORD_CHECKSUM_FIELDS, ford_checksum
 from opendbc.car.mg.mgcan import mg_checksum
@@ -42,6 +43,7 @@ class SignalType:
   RIVIAN_CHECKSUM = 15
   FORD_CHECKSUM = 16
   MG_CHECKSUM = 17
+  VOLVO_CHECKSUM = 18
 
 
 @dataclass
@@ -251,6 +253,8 @@ def get_checksum_state(dbc_name: str) -> ChecksumState | None:
                          checksum_fields=FORD_CHECKSUM_FIELDS)
   elif dbc_name == "mg":
     return ChecksumState(SignalType.MG_CHECKSUM, mg_checksum, checksum_pattern=r"Chksm|^ChLKARespToqPVHSC2$")
+  elif dbc_name.startswith("volvo_spa_"):
+    return ChecksumState(SignalType.VOLVO_CHECKSUM, volvo_checksum, checksum_pattern=r"^CHECKSUM_[12]$")
   elif dbc_name == "rivian_primary_actuator":
     return ChecksumState(SignalType.RIVIAN_CHECKSUM, rivian_checksum, checksum_pattern=r"_Checksum$")
   return None

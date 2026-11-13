@@ -1,0 +1,97 @@
+VERSION ""
+
+
+NS_ :
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: VCU PSCM XXX
+
+
+BO_ 21 DRIVER_INPUT: 8 PSCM
+ SG_ STEERING_DRIVER_INPUT : 55|8@0- (1,1) [-127|128] "" VCU
+
+BO_ 22 PSCM: 8 PSCM
+ SG_ PSCM_ANGLE_SENSOR : 6|15@0- (0.05596,0) [-916|916] "deg" VCU
+
+BO_ 96 SPEED: 8 VCU
+ SG_ SPEED : 6|15@0+ (0.003977,0) [0|130] "m/s" PSCM
+
+BO_ 103 LCA_5: 8 VCU
+ SG_ WHEEL_SPEED_1 : 6|15@0+ (0.1,0) [0|3276.7] "rpm" PSCM
+ SG_ UNKNOWN_BIT_7 : 7|1@0+ (1,0) [0|1] "" PSCM
+ SG_ CHECKSUM : 23|8@0+ (1,0) [0|255] "" PSCM
+ SG_ UNKNOWN_BITS_24 : 24|4@1+ (1,0) [0|15] "" PSCM
+ SG_ ALIVE_COUNTER : 28|4@1+ (1,0) [0|14] "" PSCM
+ SG_ WHEEL_SPEED_2 : 39|15@0+ (0.1,0) [0|3276.7] "rpm" PSCM
+ SG_ UNKNOWN_BIT_40 : 40|1@0+ (1,0) [0|1] "" PSCM
+ SG_ LCA_5_STEER : 54|15@0- (0.05596,0) [-916|916] "deg" PSCM
+ SG_ UNKNOWN_BIT_55 : 55|1@0+ (1,0) [0|1] "" PSCM
+
+BO_ 105 LCA_2: 8 VCU
+ SG_ BYTE_0 : 7|8@0+ (1,0) [0|255] "" PSCM
+ SG_ COUNTER_1 : 11|4@0+ (1,0) [0|15] "" PSCM
+ SG_ PILOT_ASSIST_ENGAGED : 12|1@0+ (1,0) [0|1] "" PSCM
+ SG_ ESC_ACTUATING : 13|1@0+ (1,0) [0|1] "" PSCM
+ SG_ ESC_ELIGIBLE : 14|1@0+ (1,0) [0|1] "" PSCM
+ SG_ UNKNOWN_BIT_15 : 15|1@0+ (1,0) [0|1] "" PSCM
+ SG_ CHECKSUM_2 : 23|8@0+ (1,0) [0|255] "" PSCM
+ SG_ UNKNOWN_BYTES_3_4 : 31|16@0+ (1,0) [0|65535] "" PSCM
+ SG_ COUNTER_2 : 43|4@0+ (1,0) [0|15] "" PSCM
+ SG_ UNKNOWN_BITS_45 : 45|2@0+ (1,0) [0|3] "" PSCM
+ SG_ BRAKE_PEDAL_PRESSED_B : 46|1@0+ (1,0) [0|1] "" PSCM
+ SG_ BRAKE_PEDAL_PRESSED_A : 47|1@0+ (-1,1) [0|1] "" PSCM
+ SG_ CHECKSUM_1 : 55|8@0+ (1,0) [0|255] "" PSCM
+ SG_ BYTE_7 : 63|8@0+ (1,0) [0|255] "" PSCM
+
+BO_ 128 GEAR_POSITION: 8 VCU
+ SG_ GEAR_POSITION : 58|3@0+ (1,0) [0|7] "" PSCM
+
+CM_ "Volvo SPA chassis CAN (Volvo wiring name: MID CAN / Chassis CAN, VCU1 pins CAN_4_Mid_1) between VCU1 and the steering rack. Signals are taken from the reverse engineering in StarPilotHQ/StarPilot volvo_mid_1.dbc (S60 Recharge 2024, XC40 Recharge, Polestar 2). Message and signal names follow that file. Nothing here has been verified on an XC90.";
+CM_ BO_ 21 "Sent by the steering rack (PSCM).";
+CM_ SG_ 21 STEERING_DRIVER_INPUT "Driver steering input, unscaled raw units. Sign unverified.";
+CM_ BO_ 22 "Sent by the steering rack (PSCM).";
+CM_ SG_ 22 PSCM_ANGLE_SENSOR "Steering wheel angle, positive is left. 0.05596 deg is 1/1024 rad.";
+CM_ SG_ 96 SPEED "Factor is empirical, from a regression against GPS ground speed.";
+CM_ BO_ 103 "Front wheel speeds and the lane centering steering angle request. openpilot replaces this message on the steering rack side.";
+CM_ SG_ 103 CHECKSUM "CRC over bytes 0, 1, 3 (upper nibble), 4 and 5. The steering angle request is not covered.";
+CM_ SG_ 103 ALIVE_COUNTER "Increments by 4 modulo 15 on every message.";
+CM_ SG_ 103 LCA_5_STEER "Steering wheel angle request, same scaling as PSCM_ANGLE_SENSOR.";
+CM_ BO_ 105 "Brake pedal and driver assistance state, relayed by VCU1.";
+CM_ SG_ 105 COUNTER_1 "Increments by 2 on every message.";
+CM_ SG_ 105 PILOT_ASSIST_ENGAGED "1 while the steering rack accepts lane centering commands from Pilot Assist.";
+CM_ SG_ 105 ESC_ACTUATING "1 together with ESC_ELIGIBLE while stability control intervenes.";
+CM_ SG_ 105 CHECKSUM_2 "CRC over bytes 0, 1, 3 and 4.";
+CM_ SG_ 105 COUNTER_2 "Increments by 4 on every message.";
+CM_ SG_ 105 BRAKE_PEDAL_PRESSED_B "Brake pedal pressed past the brake light threshold.";
+CM_ SG_ 105 BRAKE_PEDAL_PRESSED_A "Brake pedal touched, before the brake light threshold.";
+CM_ SG_ 105 CHECKSUM_1 "CRC over byte 0 and byte 5.";
+VAL_ 128 GEAR_POSITION 0 "P" 1 "R" 2 "N" 3 "D" 4 "B";

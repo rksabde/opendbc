@@ -18,6 +18,7 @@ from opendbc.car.body.values import CAR as COMMA
 from opendbc.car.byd.values import CAR as BYD
 from opendbc.car.psa.values import CAR as PSA
 from opendbc.car.mg.values import CAR as MG
+from opendbc.car.volvo.values import CAR as VOLVO
 
 # FIXME: add routes for these cars
 non_tested_cars = [
@@ -39,6 +40,8 @@ non_tested_cars = [
   # These are on the 2-bit DAS_steeringControlType firmware, which is dashcam only, need new routes
   TESLA.TESLA_MODEL_X,
 
+  # No route has been recorded yet, the port is based on public reverse engineering
+  VOLVO.VOLVO_XC90_MK2,
 ]
 
 

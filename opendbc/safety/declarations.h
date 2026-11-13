@@ -35,6 +35,7 @@
 #define SAFETY_RIVIAN 33U
 #define SAFETY_VOLKSWAGEN_MEB 34U
 #define SAFETY_BYD 35U
+#define SAFETY_VOLVO 36U
 #define SAFETY_MG 38U
 
 #define GET_BIT(msg, b) ((bool)!!(((msg)->data[((b) / 8U)] >> ((b) % 8U)) & 0x1U))
@@ -349,6 +350,8 @@ typedef struct {
   bool volkswagen_resume_button_prev;
   bool volkswagen_brake_pedal_switch;
   bool volkswagen_brake_pressure_detected;
+
+  struct sample_t volvo_stock_angle;  // last 6 steer angles requested by the stock system
 } SafetyState;
 
 typedef struct {
@@ -466,3 +469,4 @@ extern const safety_hooks rivian_hooks;
 extern const safety_hooks psa_hooks;
 extern const safety_hooks byd_hooks;
 extern const safety_hooks mg_hooks;
+extern const safety_hooks volvo_hooks;
